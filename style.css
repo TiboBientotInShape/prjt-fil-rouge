@@ -1,0 +1,353 @@
+/**
+ * QuizMusic - Styles personnalisés
+ * Jour 1 : PHP Procédural - Améliorations visuelles et animations
+ * 
+ * Ce fichier complète Tailwind CSS avec des styles personnalisés
+ * pour améliorer l'expérience utilisateur de QuizMusic
+ */
+
+/* ==========================================
+   ANIMATIONS PERSONNALISÉES
+   ========================================== */
+
+/* Animation d'apparition en fondu */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Animation de pulsation pour les éléments importants */
+@keyframes pulse-custom {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.animate-pulse-custom {
+    animation: pulse-custom 2s infinite;
+}
+
+/* Animation de rotation pour les éléments de chargement */
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-slow {
+    animation: spin-slow 3s linear infinite;
+}
+
+/* ==========================================
+   STYLES DES COMPOSANTS QUIZ
+   ========================================== */
+
+/* Amélioration des boutons radio */
+input[type="radio"] {
+    transition: all 0.2s ease;
+}
+
+input[type="radio"]:checked {
+    transform: scale(1.1);
+}
+
+/* Effet de survol sur les cartes de questions */
+.question-card {
+    transition: all 0.3s ease;
+}
+
+.question-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Style pour les labels de réponses sélectionnées */
+.reponse-selectionnee {
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    border-color: #6366f1;
+    transform: scale(1.02);
+}
+
+/* ==========================================
+   GRADIENTS PERSONNALISÉS
+   ========================================== */
+
+/* Gradient principal QuizMusic */
+.bg-gradient-quiz {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Gradient alternatif pour les variations */
+.bg-gradient-alt {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Gradient de succès pour les bons résultats */
+.bg-gradient-success {
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+}
+
+/* Gradient d'attention pour les conseils */
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+/* ==========================================
+   EFFETS VISUELS AVANCÉS
+   ========================================== */
+
+/* Effet de glassmorphism pour les éléments flottants */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Ombre portée personnalisée */
+.shadow-quiz {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Effet de survol avec lueur */
+.hover-glow {
+    transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 30px rgba(103, 126, 234, 0.5);
+}
+
+/* ==========================================
+   RESPONSIVE ET ACCESSIBILITÉ
+   ========================================== */
+
+/* Amélioration du focus pour l'accessibilité */
+button:focus,
+input:focus,
+a:focus {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+}
+
+/* Adaptation mobile pour les cartes */
+@media (max-width: 768px) {
+    .question-card {
+        margin-bottom: 1rem;
+    }
+    
+    .quiz-container {
+        padding: 1rem;
+    }
+}
+
+/* ==========================================
+   ANIMATIONS DE RÉSULTATS
+   ========================================== */
+
+/* Animation de compteur pour les scores */
+@keyframes countUp {
+    from {
+        transform: scale(0.5) rotate(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.score-animation {
+    animation: countUp 1s ease-out;
+}
+
+/* Animation de badge pour les niveaux */
+@keyframes badgeReveal {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.badge-animation {
+    animation: badgeReveal 1.2s ease-out;
+}
+
+/* ==========================================
+   EFFETS DE PARTICULES POUR LES CONFETTIS
+   ========================================== */
+
+/* Style pour les confettis générés en JavaScript */
+.confetti {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* ==========================================
+   AMÉLIORATIONS DE TYPOGRAPHIE
+   ========================================== */
+
+/* Amélioration de la lisibilité */
+.text-readable {
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+}
+
+/* Style pour les citations et commentaires */
+.quote-style {
+    font-style: italic;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.quote-style::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 2em;
+    color: #6366f1;
+    opacity: 0.5;
+}
+
+/* ==========================================
+   BARRES DE PROGRESSION PERSONNALISÉES
+   ========================================== */
+
+/* Style pour la barre de progression des résultats */
+.progress-bar {
+    background: linear-gradient(90deg, 
+        #ef4444 0%, 
+        #f97316 25%, 
+        #eab308 50%, 
+        #22c55e 75%, 
+        #10b981 100%);
+    border-radius: 9999px;
+    transition: width 2s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    animation: shine 2s ease-out;
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* ==========================================
+   STYLES POUR LES TOOLTIPS
+   ========================================== */
+
+/* Tooltip simple pour les informations supplémentaires */
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+}
+
+/* ==========================================
+   STYLES POUR LE MODE SOMBRE (BONUS)
+   ========================================== */
+
+/* Variables CSS pour faciliter la maintenance */
+:root {
+    --quiz-primary: #6366f1;
+    --quiz-secondary: #8b5cf6;
+    --quiz-accent: #ec4899;
+    --quiz-background: #1e1b4b;
+    --quiz-surface: #312e81;
+    --quiz-text: #e2e8f0;
+}
+
+/* Mode sombre automatique (si préféré par l'utilisateur) */
+@media (prefers-color-scheme: dark) {
+    .auto-dark {
+        background: var(--quiz-background);
+        color: var(--quiz-text);
+    }
+}
+
+/* ==========================================
+   STYLES D'IMPRESSION
+   ========================================== */
+
+/* Optimisation pour l'impression des résultats */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-friendly {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+    }
+}
