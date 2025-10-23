@@ -174,18 +174,24 @@ class Quiz {
     public function calculerScore(array $reponsesUtilisateur): int {
         $score = 0;
 
-        // 📚 Parcours de chaque question
-        foreach ($this->questions as $index => $question) {
-            // Récupération de la réponse pour cette question
-            // ?? -1 signifie "si la réponse n'existe pas, prendre -1"
-            // -1 est une valeur impossible (les réponses vont de 0 à 3)
-            $reponseUser = (int)($reponsesUtilisateur[$index] ?? -1);
+        foreach ($this->questions as $question) {
+            $id = $question->getId();
 
-            // 📚 CONCEPT : Polymorphisme en action
-            // On appelle estCorrect() sans savoir si c'est une QuestionTexte, Image ou Audio
-            // Chaque objet utilise la méthode héritée de Question
+            // Exemple : $_POST['reponse_12'] pour la question ID 12
+            $cle = 'reponse_' . $id;
+
+            if (!isset($reponsesUtilisateur[$cle])) {
+                continue;
+            }
+
+            $raw = $reponsesUtilisateur[$cle];
+
+            // Ne pas forcer en int : la valeur peut être 'a'/'b'/'c'/'d' ou '0'..'3' selon le formulaire.
+            // Si le champ est un tableau (ex: checkbox), on prend le premier élément.
+            $reponseUser = is_array($raw) ? reset($raw) : trim((string)$raw);
+
             if ($question->estCorrect($reponseUser)) {
-                $score++;  // Bonne réponse : on incrémente
+                $score++;
             }
         }
 

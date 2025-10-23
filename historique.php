@@ -2,9 +2,6 @@
 /**
  * QuizMusic - Page d'historique
  * Jour 4 : Affichage de l'historique des scores depuis la BDD
- *
- * 📚 CONCEPT : Utilisation de la méthode User::getHistorique()
- * pour récupérer les scores avec jointure SQL
  */
 
 session_start();
@@ -19,8 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 require_once 'classes/Database.php';
 require_once 'classes/User.php';
 
-// 📚 CONCEPT : Récupération de l'utilisateur depuis la session
-// On a besoin de l'objet User pour appeler getHistorique()
+// 📚 Récupération de l'utilisateur depuis la session
 $user = new User(
     $_SESSION['user_id'],
     $_SESSION['user_pseudo'],
@@ -30,13 +26,19 @@ $user = new User(
 // 📚 Récupération de l'historique
 $historique = $user->getHistorique();
 
-// 📚 CONCEPT : Calcul des statistiques globales
+// 📚 Calcul des statistiques globales
 $totalParties = count($historique);
 $totalPoints = 0;
 $meilleurePerformance = 0;
 
 foreach ($historique as $score) {
-    $totalPoints += $score['score'];
+    $totalPoints += (int)$score['score'];
+
+    // 🔒 Sécurité : éviter la division par zéro
+    if (empty($score['total_questions']) || $score['total_questions'] == 0) {
+        continue;
+    }
+
     $pourcentage = ($score['score'] / $score['total_questions']) * 100;
     if ($pourcentage > $meilleurePerformance) {
         $meilleurePerformance = $pourcentage;
@@ -137,8 +139,10 @@ $moyenne = $totalParties > 0 ? round($totalPoints / $totalParties, 1) : 0;
                         <tbody>
                             <?php foreach ($historique as $index => $score): ?>
                                 <?php
-                                // 📚 Calcul du pourcentage
-                                $pourcentage = ($score['score'] / $score['total_questions']) * 100;
+                                // 🔒 Sécurité division par zéro
+                                $pourcentage = !empty($score['total_questions']) && $score['total_questions'] > 0
+                                    ? ($score['score'] / $score['total_questions']) * 100
+                                    : 0;
 
                                 // 📚 Détermination de la couleur selon le score
                                 if ($pourcentage >= 80) {
@@ -156,9 +160,9 @@ $moyenne = $totalParties > 0 ? round($totalPoints / $totalParties, 1) : 0;
                                 $dateFormatee = $date->format('d/m/Y à H:i');
 
                                 // 📚 Formatage du temps
-                                $tempsAffiche = $score['temps_seconde'] ?
-                                    floor($score['temps_seconde'] / 60) . 'min ' . ($score['temps_seconde'] % 60) . 's' :
-                                    '-';
+                                $tempsAffiche = $score['temps_seconde']
+                                    ? floor($score['temps_seconde'] / 60) . 'min ' . ($score['temps_seconde'] % 60) . 's'
+                                    : '-';
                                 ?>
                                 <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors <?php echo $index % 2 === 0 ? 'bg-white' : 'bg-gray-50'; ?>">
                                     <!-- Thème -->
@@ -211,5 +215,4 @@ $moyenne = $totalParties > 0 ? round($totalPoints / $totalParties, 1) : 0;
         </div>
     </div>
 </body>
-
 </html>
